@@ -1,0 +1,279 @@
+HTTP/1.1 200 OK
+Date: Tue, 09 Nov 2021 01:09:26 GMT
+Server: Apache
+Content-Location: index.html.en
+Vary: negotiate,accept-language
+TCN: choice
+Last-Modified: Thu, 01 Nov 2012 10:47:43 GMT
+Accept-Ranges: bytes
+Content-Length: 12019
+Content-Type: text/html
+Content-Language: en
+
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="google-site-verification" content="GPJhqkdK-Y0BXArV325U0VIW9LPZEErhfA_kVjUPmps" />
+        <title>Sweetapp.com</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <!-- Script tag must be closed in this way for IE -->
+        <script src="javascript/lib/MochiKit/MochiKit.js" type="text/javascript"></script>
+        <script type="text/javascript">var lang="en"</script>
+        <script src="javascript/story.js" type="text/javascript"></script>
+    </head>
+    <body onload="randomStory(lang)" text="#000000" bgcolor="#FFFFFF" link="#0000EF" vlink="#51188E" alink="#FF0000">
+        <div align="center">
+            <table width="100%">
+                <tr>
+                    <td width="33%"/>
+                    <td width="33%" align="center"><h1>Sweetapp.com</h1></td>
+                    <td width="33%" align="right">
+                        <a href="index.html.de">
+                            <img border="0" src="images/germanflag.gif" alt="Deutsch"/>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table width="100%">
+            <tr>
+                <td valign="top">
+                    <p>
+                    In 1998 I was working for a small company developing software for hand-held medical devices.
+                    One of my colleagues, Sujith Subasinghe, was in the habit of classify clever 
+                    code or software as "sweet". Thus I took sweetapp.com as my domain.
+                    </p>
+                </td>
+                <td rowspan="2">
+                        <a id="story_image_link" href="images/neuschwanstein_big.jpg"><img id="story_image" alt="Neuschwanstein" border="0" src="images/loading.gif" /></a>
+                        <div align="left">
+                            <img alt="Previous Image" src="images/previous.png" onclick="previousStory(lang)"/>
+                            <img alt="Random Image" src="images/random.png" onclick="randomStory(lang)"/>
+                            <img alt="Next Image" src="images/next.png" onclick="nextStory(lang)"/>
+                        </div>
+                  </td>
+            </tr>
+            <tr>
+                <td id="story_text" valign="bottom" style="font-style: italic">
+                </td> 
+            </tr>
+        </table>
+        <h3>Brian @ Sweetapp.com</h3>
+        <ul>
+            <li>
+                <a href="brian/resume.html">Résumé</a> - Things that I've done for money
+            </li>
+            <li>
+                <a href="stories.xml">stories.xml</a> - The source for the short stories shown to
+                the right
+            </li>
+            <li>
+                <a href="brian/roster.html">Age of Empires Roster</a> - The current AOE ratings 
+                of some of my friends.
+            </li>
+            <li>
+                <a href="emile">Grandpa</a> - A little site that I created for my Grandpa's
+                100th birthday.
+            </li>
+            <li>Vacation Photos:
+                <ul>
+                  <li>
+                    <a href="brian/israel2008">Israel 2008</a>
+                    - A week in Israel and Jordon.
+                  </li>
+                  <li>
+                    <a href="brian/austria2008">Austria 2008</a>
+                    - A few days in Innsbruck and Vienna.
+                  </li>
+                  <li>
+                    <a href="brian/dublin2008">Dublin 2008</a>
+                    - Some random Dublin photos.
+                  </li>
+                  <li>
+                    <a href="brian/egypt2008">Egypt 2008</a>
+                    - Egypt for a week with some Googlers.
+                  </li>
+                  <li>
+                    <a href="brian/lasvegas2008">Los Vegas 2008</a>
+                    - Los Vegas, Death Valley and The Grand Canyon.
+                  </li>
+                  <li>
+                    <a href="brian/newyork2007">New York 2007</a>
+                    - A few hours walking in Manhattan waiting for a flight
+                  </li>
+                  <li>
+                    <a href="brian/christmas2007">Christmas 2007</a>
+                    - Christmas with the familly
+                  </li>
+                  <li>
+                    <a href="brian/cambridge2007">Cambridge 2007</a>
+                    - One weekend in the city and University
+                  </li>
+                  <li>
+                    <a href="brian/airdisplay2007">Brey "Air Display" 2007</a>
+                    - Brey, some airplanes and Greystones
+                  </li>
+                  <li>
+                    <a href="brian/vilnius2007">Vilnius 2007</a>
+                    - A week in Vilnius for EuroPython
+                  </li>
+                  <li>
+                    <a href="brian/irishcountry2007may">Irish Countryside 2007 (May)</a>
+                    - One weekend driving around the countryside in Ireland
+                  </li>
+                  <li>
+                    <a href="brian/irishcountry2007">Irish Countryside 2007</a>
+                    - One weekend driving around the countryside in Ireland
+                  </li>
+                  <li>
+                    <a href="brian/london2007">London 2007</a>
+                    - A little afterwork tourism in London
+                  </li>
+                  <li>
+                    <a href="brian/monterey2007">Monterey 2007</a>
+                    - One day driving around in Monterey and Big Sur
+                  </li>
+                  <li>
+                    <a href="brian/yosemite2007">Yosemite 2007</a>
+                    - Two days in Yosemite National Park
+                  </li>
+                  <li>
+                    <a href="brian/sinai2007">Red Sea 2007</a> - Nine days of diving in the Red Sea
+                  </li>
+                  <li>
+                    <a href="brian/christmas2006">Christmas 2006</a> - Christmas at home
+                  </li>
+                  <li>
+                    <a href="brian/coz2006">Cozumel 2006</a> - Six days of diving in Cozumel
+                  </li>
+                  <li>
+                    <a href="brian/toronto2006">Toronto 2006</a> - A week with Aneil, Kris in Quinn in Toronto
+                  </li>
+                  <li>
+                  <a href="brian/wedding2006">Luda and Garys Wedding</a>
+                </li>
+                <li>
+                    <a href="brian/paris2006">Paris 2006</a> - A weekend in Paris with my brother
+                </li>
+                <li>
+                    <a href="brian/geneva2006">Geneva 2006</a> - One week trip to Geneva and Mont Blanc
+                </li>
+                <li>
+                    <a href="brian/amsterdam2006">Amsterdam 2006</a> - Visiting Kevin in Amsterdam
+                </li>
+                <li>
+                    <a href="brian/budapest2006">Budapest 2006</a> - Four day trip to Budapest
+                </li>
+                <li>
+                    <a href="brian/egypt2006">Egypt 2006</a> - Trip to Egypt (Luxor, Cairo, Red Sea)
+                </li>
+                <li>
+                    <a href="brian/egypt2005">Egypt 2005</a> - Trip to Egypt (Alexandria, Red Sea, Nile
+                    Cruise)
+                </li>
+                <li>
+                    <a href="brian/stockholm2005">Stockholm 2005</a> - Trip to Stockholm after EuroPython
+                </li>
+                <li>
+                    <a href="brian/goteburg2004">Göteburg 2005</a> - Trip to Göteburg for EuroPython
+                </li>
+                <li>
+                    <a href="brian/copenhagen2005">Copenhagen 2005</a> - Weekend trip to Copenhagen in March
+                </li>
+                <li>
+                    <a href="brian/nymphenburg2005">Nymphenburg 2005</a> - A half-day at the famous castle in Müchen with my sister Kris
+                </li>
+                <li>
+                    <a href="brian/neuschwanstein2005">Neuschwanstein 2005</a> - Day trip to Neuschwanstein
+                </li>
+                <li>
+                    <a href="brian/naples2005">Naples 2005</a> - Trip to Naples in January with my brother Kevin
+                </li>
+                <li>
+                    <a href="brian/rome2005j">Rome 2005</a> - Week trip to Rome in January with my brother Kevin
+                </li>
+                <li>
+                    <a href="brian/prague2005">Prague 2005</a> - Weekend trip to Prague in January with my brother Kevin
+                </li>
+                <li>
+                    <a href="brian/malta2004">Malta 2004</a> - Trip to Malta for diving (camera flooded)
+                </li>
+                <li>
+                    <a href="brian/goteburg2004">Göteburg 2004</a> - Trip to Göteburg for EuroPython
+                </li>
+                <li>
+                    <a href="brian/rt2002">Roadtrip 2002</a> - Roadtrip pictures taken by my former 
+                    roomate Joe and I
+                </li>
+                <li>
+                    <a href="brian/coz2001">Cozumel 2001</a> - Cozumel vacation pictures taken my 
+                    friend Gurm and I
+                </li>
+                </ul>
+             </li>
+        </ul>
+        <h3>Projects</h3>
+        <ul>
+            <li>
+                <a href="zone">Zone Tools</a> - Tools for fanatical Microsoft Gaming Zone 
+                players
+            </li>
+            <li>
+                <a href="extend">Extending Python with C</a> - A talk and supporting code that 
+                I prepared explaining how to extend Python with C code
+            </li>
+            <li>
+                <a href="http://pyana.sourceforge.net">Pyana</a> - Python wrapper around the 
+                Xalan-C XSLT engine
+            </li>
+            <li>
+                <a href="pyrex">Pyrex</a> - My work on Pyrex, a language for writing Python 
+                extensions
+            </li>
+            <li>
+                <a href="xmlrpc">Python XML-RPC</a> - Some of my work on Python XML-RPC
+            </li>
+            <li>
+                <a href="http://silvercity.sourceforge.net">SilverCity</a> - Python wrapper 
+                around the Scintilla lexical system
+            </li>
+        </ul>
+        <h3>Obsolete Projects</h3>
+        <ul>
+            <li>
+                <a href="cgi-bin/choiceofkings">Choice of Kings</a> - A table comparing <a href="http://www.microsoft.com/games/conquerors/">
+                    Age of Empires II: The Conquerors</a> civilizations
+            </li>
+            <li>
+                <a href="keyboardcombiner">Keyboard Combiner</a> - Improves the input behavior 
+                of ADB-equiped Macs (ADB? What's that?)
+            </li>
+        </ul>
+        <h3>Server Information</h3>
+        <ul>
+            <li>
+                <a href="www_reports/www.html">Sweetapp website statistics</a> - Bandwidth 
+                usage for the sweetapp.com website
+            </li>
+            <li>
+                <a href="cgi-bin/machineinfo/service_info.py">Servers &amp; Services</a> - A list 
+                of computers under my care and the services that they offer
+            </li>
+        </ul>
+        <h3>Contact</h3>
+        <ul>
+            <li>
+                <a href="mailto:brian@sweetapp.com">Brian Quinlan (brian@sweetapp.com)</a> - For spambots to harvest
+            </li>
+        </ul>
+        <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+        </script>
+        <script type="text/javascript">
+           _uacct = "UA-1471387-1";
+           urchinTracker();
+        </script>
+    </body>
+</html>
