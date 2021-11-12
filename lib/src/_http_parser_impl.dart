@@ -938,7 +938,7 @@ class _HttpParser extends Stream<_HttpIncoming> {
   bool get persistentConnection => _persistentConnection;
 
   void set isHead(bool value) {
-    _noMessageBody = valueOfNonNullableParamWithDefault<bool>(value, false);
+    _noMessageBody = value;
   }
 
   _HttpDetachedIncoming detachIncoming() {

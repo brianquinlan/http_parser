@@ -1025,7 +1025,7 @@ class _Cookie implements Cookie {
           value = parseAttributeValue();
         }
         if (name == "expires") {
-          expires = HttpDate._parseCookieDate(value);
+          expires = parseHttpDate(value);
         } else if (name == "max-age") {
           maxAge = int.parse(value);
         } else if (name == "domain") {
