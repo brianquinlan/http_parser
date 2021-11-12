@@ -32,7 +32,7 @@ void main() {
       });
     });
 
-    test('POST, no text body', () {
+    test('POST, text body', () {
       const data =
           'POST /foo/bar HTTP/1.1\r\nContent-Length: 10\r\n\r\n1234567890';
 
@@ -43,6 +43,38 @@ void main() {
         expect(event.headers.contentLength, equals(10));
         expect(await streamToString(event), equals("1234567890"));
       });
+    });
+
+    test('POST, text body no content-length', () {
+      const data = 'POST /foo/bar HTTP/1.1\r\n\r\n1234567890';
+
+      final s = parseHttpRequestStream(stringToStream(data));
+      s.listen((ParsedHttpRequest event) async {
+        expect(event.headers.contentLength, equals(-1));
+        expect(await streamToString(event), equals(""));
+      });
+    });
+  });
+
+  test('POST, chunked text', () {
+    const data = 'POST /foo/bar HTTP/1.1\r\n'
+        'Transfer-Encoding: chunked\r\n'
+        '\r\n'
+        '5\r\n'
+        'Hello\r\n'
+        '1\r\n'
+        ' \r\n'
+        '6\r\n'
+        'World!\r\n'
+        '0\r\n'
+        '\r\n';
+
+    final s = parseHttpRequestStream(stringToStream(data));
+    s.listen((ParsedHttpRequest event) async {
+      expect(event.method, equals('POST'));
+      expect(event.uri, equals(Uri(path: "/foo/bar")));
+      expect(event.headers.contentLength, equals(-1));
+      expect(await streamToString(event), equals("Hello World!"));
     });
   });
   group('response', () {
