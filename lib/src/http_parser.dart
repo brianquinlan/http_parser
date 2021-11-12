@@ -16,6 +16,22 @@ part '_http_parser_impl.dart';
 part '_http_headers.dart';
 part '_http_incoming.dart';
 
+class ParsedHttpRequest extends Stream<Uint8List> {
+  final _HttpIncoming _incoming;
+
+  ParsedHttpRequest(this._incoming);
+
+  String get method => _incoming.method as String;
+  Uri? get uri => _incoming.uri;
+  HttpHeaders get headers => _incoming.headers;
+
+  @override
+  StreamSubscription<Uint8List> listen(void onData(Uint8List event)?,
+          {Function? onError, void onDone()?, bool? cancelOnError}) =>
+      _incoming.listen(onData,
+          onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+}
+
 class ParsedHttpResponse extends Stream<Uint8List> {
   final _HttpIncoming _incoming;
 
@@ -30,6 +46,19 @@ class ParsedHttpResponse extends Stream<Uint8List> {
           {Function? onError, void onDone()?, bool? cancelOnError}) =>
       _incoming.listen(onData,
           onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+}
+
+Stream<ParsedHttpRequest> parseHttpRequestStream(Stream<Uint8List> data) {
+  final parser = _HttpParser.requestParser();
+  parser.listenToStream(data);
+
+  final controller = StreamController<ParsedHttpRequest>();
+  StreamSubscription? s;
+  s = parser.listen((incoming) {
+    s!.pause();
+    controller.add(ParsedHttpRequest(incoming));
+  }, onError: controller.addError, onDone: controller.close);
+  return controller.stream;
 }
 
 Stream<ParsedHttpResponse> parseHttpResponseStream(Stream<Uint8List> data) {

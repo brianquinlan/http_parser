@@ -20,57 +20,83 @@ Future<List<int>> streamToInts(Stream<Uint8List> s) async =>
     (await s.toList()).expand((i) => i).toList();
 
 void main() {
-  group('status line', () {
-    test('HTTP 1.0', () async {
-      const data = 'HTTP/1.0 200 OK\r\n\r\nTest';
+  group('request', () {
+    test('GET, no body', () {
+      const data = 'GET /foo/bar HTTP/1.0\r\n\r\n';
 
-      final s = parseHttpResponseStream(stringToStream(data));
-      s.listen((ParsedHttpResponse event) {
-        expect(event.statusCode, equals(200));
-        expect(event.reasonPhrase, equals("OK"));
-      });
-      Future(() => null).onError((error, stackTrace) => null);
-    });
-    test('HTTP 1.1', () async {
-      const data = 'HTTP/1.1 200 OK\r\n\r\nTest';
-
-      final s = parseHttpResponseStream(stringToStream(data));
-      s.listen((ParsedHttpResponse event) {
-        expect(event.statusCode, equals(200));
-        expect(event.reasonPhrase, equals("OK"));
+      final s = parseHttpRequestStream(stringToStream(data));
+      s.listen((ParsedHttpRequest event) async {
+        expect(event.method, equals('GET'));
+        expect(event.uri, equals(Uri(path: "/foo/bar")));
+        expect(await streamToString(event), equals(""));
       });
     });
-    test('no http version', () async {
-      const data = '200 OK\r\n\r\nTest';
 
-      final s = parseHttpResponseStream(stringToStream(data));
-      s.listen((ParsedHttpResponse event) {
-        fail('expected parse failure, got $event');
-      }, onError: (e) => expect(e, const TypeMatcher<HttpException>()));
+    test('POST, no text body', () {
+      const data =
+          'POST /foo/bar HTTP/1.1\r\nContent-Length: 10\r\n\r\n1234567890';
+
+      final s = parseHttpRequestStream(stringToStream(data));
+      s.listen((ParsedHttpRequest event) async {
+        expect(event.method, equals('POST'));
+        expect(event.uri, equals(Uri(path: "/foo/bar")));
+        expect(event.headers.contentLength, equals(10));
+        expect(await streamToString(event), equals("1234567890"));
+      });
     });
   });
-  group('content', () {
-    test('text content', () async {
-      const data = 'HTTP/1.1 200 OK\r\n\r\nTest';
+  group('response', () {
+    group('status line', () {
+      test('HTTP 1.0', () async {
+        const data = 'HTTP/1.0 200 OK\r\n\r\nTest';
 
-      final s = parseHttpResponseStream(stringToStream(data));
-      s.listen((ParsedHttpResponse event) async {
-        expect(event.statusCode, equals(200));
-        expect(event.reasonPhrase, equals("OK"));
-        expect(await streamToString(event), equals("Test"));
+        final s = parseHttpResponseStream(stringToStream(data));
+        s.listen((ParsedHttpResponse event) {
+          expect(event.statusCode, equals(200));
+          expect(event.reasonPhrase, equals("OK"));
+        });
+      });
+      test('HTTP 1.1', () async {
+        const data = 'HTTP/1.1 200 OK\r\n\r\nTest';
+
+        final s = parseHttpResponseStream(stringToStream(data));
+        s.listen((ParsedHttpResponse event) {
+          expect(event.statusCode, equals(200));
+          expect(event.reasonPhrase, equals("OK"));
+        });
+      });
+      test('no http version', () async {
+        const data = '200 OK\r\n\r\nTest';
+
+        final s = parseHttpResponseStream(stringToStream(data));
+        s.listen((ParsedHttpResponse event) {
+          fail('expected parse failure, got $event');
+        }, onError: (e) => expect(e, const TypeMatcher<HttpException>()));
       });
     });
+    group('content', () {
+      test('text content', () async {
+        const data = 'HTTP/1.1 200 OK\r\n\r\nTest';
 
-    test('binary content', () async {
-      final data = [for (var i = 0; i < 256; i++) i];
-      final response =
-          Uint8List.fromList(utf8.encode('HTTP/1.1 200 OK\r\n\r\n') + data);
+        final s = parseHttpResponseStream(stringToStream(data));
+        s.listen((ParsedHttpResponse event) async {
+          expect(event.statusCode, equals(200));
+          expect(event.reasonPhrase, equals("OK"));
+          expect(await streamToString(event), equals("Test"));
+        });
+      });
 
-      final s = parseHttpResponseStream(Stream.fromIterable([response]));
-      s.listen((ParsedHttpResponse event) async {
-        expect(event.statusCode, equals(200));
-        expect(event.reasonPhrase, equals("OK"));
-        expect(await streamToInts(event), equals(data));
+      test('binary content', () async {
+        final data = [for (var i = 0; i < 256; i++) i];
+        final response =
+            Uint8List.fromList(utf8.encode('HTTP/1.1 200 OK\r\n\r\n') + data);
+
+        final s = parseHttpResponseStream(Stream.fromIterable([response]));
+        s.listen((ParsedHttpResponse event) async {
+          expect(event.statusCode, equals(200));
+          expect(event.reasonPhrase, equals("OK"));
+          expect(await streamToInts(event), equals(data));
+        });
       });
     });
   });
