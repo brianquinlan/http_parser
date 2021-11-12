@@ -207,6 +207,22 @@ class _HttpDetachedIncoming extends Stream<Uint8List> {
   }
 }
 
+class ParsedHttpResponse extends Stream<Uint8List> {
+  final HttpIncoming _incoming;
+
+  ParsedHttpResponse(this._incoming);
+
+  int get statusCode => _incoming.statusCode as int;
+  String get reasonPhrase => _incoming.reasonPhrase as String;
+  _HttpHeaders get headers => _incoming.headers;
+
+  @override
+  StreamSubscription<Uint8List> listen(void onData(Uint8List event)?,
+          {Function? onError, void onDone()?, bool? cancelOnError}) =>
+      _incoming.listen(onData,
+          onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+}
+
 class HttpIncoming extends Stream<Uint8List> {
   final int _transferLength;
   final _dataCompleter = Completer<bool>();
@@ -248,16 +264,27 @@ class HttpIncoming extends Stream<Uint8List> {
   // Is completed once all data have been received.
   Future<bool> get dataDone => _dataCompleter.future;
 
-  @override
-  String toString() {
-    return 'XXXXX: $statusCode $reasonPhrase\n$headers $method $uri';
-  }
-
   void close(bool closing) {
     fullBodyRead = true;
     hasSubscriber = true;
     _dataCompleter.complete(closing);
   }
+}
+
+// DateTime parseHttpResponseString(String response) {}
+
+Stream<ParsedHttpResponse> parseHttpResponseStream(Stream<Uint8List> data) {
+  final parser = HttpParser.responseParser();
+  parser.listenToStream(data);
+
+  final controller = StreamController<ParsedHttpResponse>();
+  StreamSubscription? s;
+  s = parser.listen((incoming) {
+    s!.pause();
+    // TODO(bquinlan): Handle status 100!
+    controller.add(ParsedHttpResponse(incoming));
+  }, onError: controller.addError, onDone: controller.close);
+  return controller.stream;
 }
 
 /// HTTP parser which parses the data stream given to [consume].
