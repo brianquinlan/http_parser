@@ -10,7 +10,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:http_parser/src/http_date.dart';
+import 'http_date.dart';
 
 part '_http_parser_impl.dart';
 part '_http_headers.dart';
