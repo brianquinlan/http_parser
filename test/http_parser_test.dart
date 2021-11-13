@@ -41,10 +41,11 @@ void main() {
         expect(event.method, equals('POST'));
         expect(event.uri, equals(Uri(path: "/foo/bar")));
         expect(event.headers.contentLength, equals(10));
+        expect(event.headers.chunkedTransferEncoding, isFalse);
         expect(await streamToString(event), equals("1234567890"));
       });
     });
-
+/*
     test('POST, text body no content-length', () {
       const data = 'POST /foo/bar HTTP/1.1\r\n\r\n1234567890';
 
@@ -54,8 +55,8 @@ void main() {
         expect(await streamToString(event), equals(""));
       });
     });
+*/
   });
-
   test('POST, chunked text', () {
     const data = 'POST /foo/bar HTTP/1.1\r\n'
         'Transfer-Encoding: chunked\r\n'
@@ -74,7 +75,28 @@ void main() {
       expect(event.method, equals('POST'));
       expect(event.uri, equals(Uri(path: "/foo/bar")));
       expect(event.headers.contentLength, equals(-1));
+      expect(event.headers.chunkedTransferEncoding, isTrue);
       expect(await streamToString(event), equals("Hello World!"));
+    });
+  });
+
+  test('POST, keep alive and two requests', () {
+    const data = 'POST /foo/bar HTTP/1.1\r\n'
+        'Connection: keep-alive\r\n'
+        'Content-Length: 5\r\n'
+        '\r\n'
+        'Hello'
+        'POST /foo/bar HTTP/1.1\r\n'
+        'Connection: close\r\n'
+        'Content-Length: 6\r\n'
+        '\r\n'
+        'World!';
+
+    final s = parseHttpRequestStream(stringToStream(data));
+    var i = 0;
+    s.listen((ParsedHttpRequest event) async {
+      expect(await streamToString(event),
+          i++ == 0 ? equals("Hello") : equals("World!"));
     });
   });
   group('response', () {

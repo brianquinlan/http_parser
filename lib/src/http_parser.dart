@@ -57,6 +57,7 @@ Stream<ParsedHttpRequest> parseHttpRequestStream(Stream<Uint8List> data) {
   s = parser.listen((incoming) {
     s!.pause();
     controller.add(ParsedHttpRequest(incoming));
+    s.resume();
   }, onError: controller.addError, onDone: controller.close);
   return controller.stream;
 }
