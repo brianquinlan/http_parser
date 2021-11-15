@@ -55,13 +55,29 @@ Stream<ParsedHttpRequest> parseHttpRequestStream(Stream<Uint8List> data) {
   final controller = StreamController<ParsedHttpRequest>();
   StreamSubscription? s;
   s = parser.listen((incoming) {
-    s!.pause();
+    //  s!.pause();
     controller.add(ParsedHttpRequest(incoming));
-    s.resume();
+    //  s.resume();
   }, onError: controller.addError, onDone: controller.close);
   return controller.stream;
 }
 
+// Parse a stream of data into a stream of HTTP responses.
+//
+// For example:
+// // TODO(bquinlan): Check that this actually works.
+// var socket = ...
+// socket.write("GET / HTTP/1.1\r\n\r\n")
+// await for (final response in parseHttpResponseStream(socket)) {
+//   if (response.statusCode == 200) {
+//     File("output.html").openWrite().addStream(response);
+//   }
+// }
+//
+// NOTE: The ParsedHttpResponse is a stream containing the body of the HTTP
+// response. It *must* be consumed before the next ParsedHttpResponse will be
+// generated. If you are not interested in the body, use
+// `ParsedHttpResponse.drain`.
 Stream<ParsedHttpResponse> parseHttpResponseStream(Stream<Uint8List> data) {
   final parser = _HttpParser.responseParser();
   parser.listenToStream(data);
@@ -69,7 +85,7 @@ Stream<ParsedHttpResponse> parseHttpResponseStream(Stream<Uint8List> data) {
   final controller = StreamController<ParsedHttpResponse>();
   StreamSubscription? s;
   s = parser.listen((incoming) {
-    s!.pause();
+    // s!.pause();
     // TODO(bquinlan): Handle status 100!
     controller.add(ParsedHttpResponse(incoming));
   }, onError: controller.addError, onDone: controller.close);

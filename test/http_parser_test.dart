@@ -45,19 +45,8 @@ void main() {
         expect(await streamToString(event), equals("1234567890"));
       });
     });
-/*
-    test('POST, text body no content-length', () {
-      const data = 'POST /foo/bar HTTP/1.1\r\n\r\n1234567890';
-
-      final s = parseHttpRequestStream(stringToStream(data));
-      s.listen((ParsedHttpRequest event) async {
-        expect(event.headers.contentLength, equals(-1));
-        expect(await streamToString(event), equals(""));
-      });
-    });
-*/
   });
-  test('POST, chunked text', () {
+  test('POST, chunked text', () async {
     const data = 'POST /foo/bar HTTP/1.1\r\n'
         'Transfer-Encoding: chunked\r\n'
         '\r\n'
@@ -71,16 +60,17 @@ void main() {
         '\r\n';
 
     final s = parseHttpRequestStream(stringToStream(data));
-    s.listen((ParsedHttpRequest event) async {
+    // Use this style everywhere.
+    await for (final event in s) {
       expect(event.method, equals('POST'));
       expect(event.uri, equals(Uri(path: "/foo/bar")));
       expect(event.headers.contentLength, equals(-1));
       expect(event.headers.chunkedTransferEncoding, isTrue);
       expect(await streamToString(event), equals("Hello World!"));
-    });
+    }
   });
 
-  test('POST, keep alive and two requests', () {
+  test('POST, keep alive and two requests', () async {
     const data = 'POST /foo/bar HTTP/1.1\r\n'
         'Connection: keep-alive\r\n'
         'Content-Length: 5\r\n'
@@ -94,11 +84,32 @@ void main() {
 
     final s = parseHttpRequestStream(stringToStream(data));
     var i = 0;
-    s.listen((ParsedHttpRequest event) async {
+    await for (final event in s) {
       expect(await streamToString(event),
           i++ == 0 ? equals("Hello") : equals("World!"));
-    });
+    }
   });
+
+  test('POST, keep alive and two requests but body not read', () async {
+    const data = 'POST /foo/bar HTTP/1.1\r\n'
+        'Connection: keep-alive\r\n'
+        'Content-Length: 5\r\n'
+        '\r\n'
+        'Hello'
+        'PUT /foo/bar HTTP/1.1\r\n'
+        'Connection: close\r\n'
+        'Content-Length: 6\r\n'
+        '\r\n'
+        'World!';
+
+    final s = parseHttpRequestStream(stringToStream(data));
+    await s
+        .timeout(const Duration(seconds: 2))
+        .listen((ParsedHttpRequest event) async {
+      expect(event.method, equals("POST"));
+    }).asFuture(); // Do this everywhere!
+  });
+
   group('response', () {
     group('status line', () {
       test('HTTP 1.0', () async {
